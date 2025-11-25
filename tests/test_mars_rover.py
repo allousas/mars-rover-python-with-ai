@@ -1,12 +1,12 @@
 import unittest
-from mars_rover_with_ai.mars_rover import MarsRover
+from mars_rover_with_ai.mars_rover import MarsRover, Position
 
 class TestMarsRover(unittest.TestCase):
     def test_initial_position(self):
         rover = MarsRover()
-        position = rover.get_position()
+        position = rover.position
 
-        self.assertEqual(position, (0, 0, 'N'))
+        self.assertEqual(position, Position(0, 0, 'N'))
 
 
 if __name__ == '__main__':
