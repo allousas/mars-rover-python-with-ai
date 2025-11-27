@@ -13,4 +13,4 @@ class Position:
 class MarsRover:
     @property
     def position(self):
-        return Position(1, 1, 'S')  # Wrong values to make test fail
+        return Position(0, 0, 'N')
