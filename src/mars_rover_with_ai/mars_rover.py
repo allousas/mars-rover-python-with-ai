@@ -15,6 +15,8 @@ class MarsRover:
             self._position = self._position.move_forward()
         elif command == 'r':
             self._position = self._position.turn_right()
+        elif command == 'l':
+            self._position = self._position.turn_left()
 
 
 class Direction(Enum):
@@ -41,6 +43,7 @@ class Position:
     }
 
     _RIGHT_TURNS = {N: E, E: S, S: W, W: N}
+    _LEFT_TURNS = {N: W, W: S, S: E, E: N}
 
     def move_forward(self):
         dx, dy = self._FORWARD_MOVEMENTS[self.direction]
@@ -48,4 +51,7 @@ class Position:
 
     def turn_right(self):
         return Position(self.x, self.y, self._RIGHT_TURNS[self.direction])
+
+    def turn_left(self):
+        return Position(self.x, self.y, self._LEFT_TURNS[self.direction])
 
