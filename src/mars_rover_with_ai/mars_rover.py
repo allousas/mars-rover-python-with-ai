@@ -40,6 +40,8 @@ class Position:
             return Position(self.x + 1, self.y, self.direction)
         elif self.direction == S:
             return Position(self.x, self.y - 1, self.direction)
+        elif self.direction == W:
+            return Position(self.x - 1, self.y, self.direction)
         return self
 
     def turn_right(self):
