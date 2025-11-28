@@ -24,11 +24,17 @@ def test_should_move_forward(initial_position, expected_position):
     assert rover.position == expected_position
 
 
-def test_should_turn_right():
-    rover = MarsRover()
+@pytest.mark.parametrize("initial_position, expected_position", [
+    (Position(0, 0, N), Position(0, 0, E)),
+    (Position(0, 0, E), Position(0, 0, S)),
+    (Position(0, 0, S), Position(0, 0, W)),
+    (Position(0, 0, W), Position(0, 0, N)),
+])
+def test_should_turn_right(initial_position, expected_position):
+    rover = MarsRover(position=initial_position)
     rover.execute(command='r')
 
-    assert rover.position == Position(0, 0, E)
+    assert rover.position == expected_position
 
 
 
