@@ -15,6 +15,7 @@ def test_should_initialize_at_default_position():
     (Position(0, 0, N), Position(0, 1, N)),
     (Position(0, 0, E), Position(1, 0, E)),
     (Position(0, 0, S), Position(0, -1, S)),
+    (Position(0, 0, W), Position(-1, 0, W)),
 ])
 def test_should_move_forward(initial_position, expected_position):
     rover = MarsRover(position=initial_position)
