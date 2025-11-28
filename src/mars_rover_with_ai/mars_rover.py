@@ -3,8 +3,8 @@ from enum import Enum
 
 
 class MarsRover:
-    def __init__(self):
-        self._position = Position(0, 0, Direction.N)
+    def __init__(self, position=None):
+        self._position = position if position is not None else Position(0, 0, Direction.N)
 
     @property
     def position(self):

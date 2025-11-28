@@ -21,3 +21,11 @@ def test_should_turn_right():
 
     assert rover.position == Position(0, 0, Direction.E)
 
+
+def test_should_move_forward_when_oriented_east():
+    rover = MarsRover(position=Position(0, 0, Direction.E))
+    rover.execute(command='f')
+
+    assert rover.position == Position(1, 0, Direction.E)
+
+
