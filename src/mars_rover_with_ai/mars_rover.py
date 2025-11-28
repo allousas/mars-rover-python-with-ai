@@ -6,6 +6,9 @@ class MarsRover:
     def position(self):
         return Position(0, 0, 'N')
 
+    def execute(self, command: str):
+        raise NotImplementedError()
+
 
 @dataclass
 class Position:
