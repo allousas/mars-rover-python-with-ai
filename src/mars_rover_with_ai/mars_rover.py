@@ -33,6 +33,8 @@ class Position:
     def move_forward(self):
         if self.direction == Direction.N:
             return Position(self.x, self.y + 1, self.direction)
+        elif self.direction == Direction.E:
+            return Position(self.x + 1, self.y, self.direction)
         return self
 
     def turn_right(self):
