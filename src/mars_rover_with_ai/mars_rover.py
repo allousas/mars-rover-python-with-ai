@@ -13,6 +13,8 @@ class MarsRover:
     def execute(self, command: str):
         if command == 'f':
             self._position = self._position.move_forward()
+        elif command == 'r':
+            self._position = self._position.turn_right()
 
 
 class Direction(Enum):
@@ -31,5 +33,10 @@ class Position:
     def move_forward(self):
         if self.direction == Direction.N:
             return Position(self.x, self.y + 1, self.direction)
+        return self
+
+    def turn_right(self):
+        if self.direction == Direction.N:
+            return Position(self.x, self.y, Direction.E)
         return self
 
