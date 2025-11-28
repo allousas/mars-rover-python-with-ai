@@ -1,15 +1,15 @@
-from mars_rover_with_ai.mars_rover import MarsRover, Position
+from mars_rover_with_ai.mars_rover import MarsRover, Position, Direction
 
 
 def test_should_initialize_at_default_position():
     rover = MarsRover()
     position = rover.position
 
-    assert position == Position(0, 0, 'N')
+    assert position == Position(0, 0, Direction.N)
 
 
 def test_should_move_forward():
     rover = MarsRover()
     rover.execute(command='f')
 
-    assert rover.position == Position(0, 1, 'N')
+    assert rover.position == Position(0, 1, Direction.N)

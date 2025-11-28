@@ -1,9 +1,10 @@
 from dataclasses import dataclass
+from enum import Enum
 
 
 class MarsRover:
     def __init__(self):
-        self._position = Position(0, 0, 'N')
+        self._position = Position(0, 0, Direction.N)
 
     @property
     def position(self):
@@ -14,14 +15,21 @@ class MarsRover:
             self._position = self._position.move_forward()
 
 
+class Direction(Enum):
+    N = 'N'
+    S = 'S'
+    E = 'E'
+    W = 'W'
+
+
 @dataclass
 class Position:
     x: int
     y: int
-    direction: str
+    direction: Direction
 
     def move_forward(self):
-        if self.direction == 'N':
+        if self.direction == Direction.N:
             return Position(self.x, self.y + 1, self.direction)
         return self
 
