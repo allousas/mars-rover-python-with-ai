@@ -1,3 +1,4 @@
+import pytest
 from mars_rover_with_ai.mars_rover import MarsRover, Position, Direction
 
 
@@ -8,11 +9,15 @@ def test_should_initialize_at_default_position():
     assert position == Position(0, 0, Direction.N)
 
 
-def test_should_move_forward():
-    rover = MarsRover()
+@pytest.mark.parametrize("initial_position, expected_position", [
+    (Position(0, 0, Direction.N), Position(0, 1, Direction.N)),
+    (Position(0, 0, Direction.E), Position(1, 0, Direction.E)),
+])
+def test_should_move_forward(initial_position, expected_position):
+    rover = MarsRover(position=initial_position)
     rover.execute(command='f')
 
-    assert rover.position == Position(0, 1, Direction.N)
+    assert rover.position == expected_position
 
 
 def test_should_turn_right():
@@ -21,11 +26,5 @@ def test_should_turn_right():
 
     assert rover.position == Position(0, 0, Direction.E)
 
-
-def test_should_move_forward_when_oriented_east():
-    rover = MarsRover(position=Position(0, 0, Direction.E))
-    rover.execute(command='f')
-
-    assert rover.position == Position(1, 0, Direction.E)
 
 
