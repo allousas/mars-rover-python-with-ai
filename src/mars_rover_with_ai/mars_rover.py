@@ -33,19 +33,19 @@ class Position:
     y: int
     direction: Direction
 
+    _FORWARD_MOVEMENTS = {
+        N: (0, 1),
+        E: (1, 0),
+        S: (0, -1),
+        W: (-1, 0)
+    }
+
+    _RIGHT_TURNS = {N: E, E: S, S: W, W: N}
+
     def move_forward(self):
-        if self.direction == N:
-            return Position(self.x, self.y + 1, self.direction)
-        elif self.direction == E:
-            return Position(self.x + 1, self.y, self.direction)
-        elif self.direction == S:
-            return Position(self.x, self.y - 1, self.direction)
-        elif self.direction == W:
-            return Position(self.x - 1, self.y, self.direction)
-        return self
+        dx, dy = self._FORWARD_MOVEMENTS[self.direction]
+        return Position(self.x + dx, self.y + dy, self.direction)
 
     def turn_right(self):
-        if self.direction == N:
-            return Position(self.x, self.y, E)
-        return self
+        return Position(self.x, self.y, self._RIGHT_TURNS[self.direction])
 
