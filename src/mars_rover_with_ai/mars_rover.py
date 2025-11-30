@@ -8,11 +8,3 @@ class MarsRover:
     @property
     def position(self):
         return self._position
-
-    def execute(self, command: str):
-        if command == 'f':
-            self._position = self._position.move_forward()
-        elif command == 'r':
-            self._position = self._position.turn_right()
-        elif command == 'l':
-            self._position = self._position.turn_left()
