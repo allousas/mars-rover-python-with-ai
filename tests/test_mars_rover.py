@@ -36,3 +36,17 @@ def test_should_fail_with_invalid_map_size():
         assert False, "Expected InvalidMap due to invalid map size, but none was raised."
     except InvalidMap as e:
         assert "invalid size" in str(e)
+
+
+def test_should_fail_when_initial_position_marker_is_missing():
+    grid_map_without_marker = [
+        '🟩🟩🌳🟩🟩',
+        '🟩🟩🟩🟩🟩',
+        '🟩🟩🟩🌳🟩',
+        '🟩🌳🟩🟩🟩'
+    ]
+    try:
+        MarsRover(grid_map=grid_map_without_marker)
+        assert False, "Expected InvalidMap due to missing initial position marker, but none was raised."
+    except InvalidMap as e:
+        assert "invalid map: initial position marker not found" in str(e)

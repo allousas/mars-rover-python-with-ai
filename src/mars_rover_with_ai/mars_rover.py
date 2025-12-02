@@ -17,7 +17,6 @@ class MarsRover:
 
     @staticmethod
     def _extract_position_from_map(grid_map: List[str]) -> Position:
-        # Map direction emojis to Direction enum
         direction_map = {
             '➡️': Direction.E,
             '⬅️': Direction.W,
@@ -29,7 +28,6 @@ class MarsRover:
             for x, g in enumerate(graphemes):
                 if g in direction_map:
                     return Position(x, y, direction_map[g])
-        # If no marker found, default or raise? Raise for now.
         raise InvalidMap("invalid map: initial position marker not found")
 
     @property
