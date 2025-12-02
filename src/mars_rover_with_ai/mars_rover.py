@@ -1,5 +1,6 @@
 from typing import List
 from mars_rover_with_ai.position import Position
+import regex
 
 
 class MarsRover:
@@ -10,7 +11,8 @@ class MarsRover:
 
     @staticmethod
     def _validate_map(grid_map: List[str]):
-        if not grid_map or len(set(len(row) for row in grid_map)) != 1:
+        lengths = {len(regex.findall(r"\X", row)) for row in grid_map}
+        if len(lengths) != 1:
             raise InvalidMap("invalid size")
 
     @property
