@@ -1,9 +1,16 @@
-from typing import List
+from typing import List, ClassVar, Dict
 from mars_rover_with_ai.position import Position, Direction
 import regex
 
 
 class MarsRover:
+    _DIRECTION_MARKERS: ClassVar[Dict[str, Direction]] = {
+        '➡️': Direction.E,
+        '⬅️': Direction.W,
+        '⬆️': Direction.N,
+        '⬇️': Direction.S,
+    }
+
     def __init__(self, grid_map: List[str]):
         self._validate_map(grid_map)
         self._grid_map: List[str] = grid_map
@@ -17,17 +24,11 @@ class MarsRover:
 
     @staticmethod
     def _extract_position_from_map(grid_map: List[str]) -> Position:
-        direction_map = {
-            '➡️': Direction.E,
-            '⬅️': Direction.W,
-            '⬆️': Direction.N,
-            '⬇️': Direction.S,
-        }
         for y, row in enumerate(grid_map):
             graphemes = regex.findall(r"\X", row)
             for x, g in enumerate(graphemes):
-                if g in direction_map:
-                    return Position(x, y, direction_map[g])
+                if g in MarsRover._DIRECTION_MARKERS:
+                    return Position(x, y, MarsRover._DIRECTION_MARKERS[g])
         raise InvalidMap("invalid map: initial position marker not found")
 
     @property
