@@ -1,4 +1,4 @@
-from typing import List, ClassVar, Dict
+from typing import List, ClassVar, Dict, Set
 from mars_rover_with_ai.position import Position, Direction
 import regex
 
@@ -10,6 +10,7 @@ class MarsRover:
         '⬆️': Direction.N,
         '⬇️': Direction.S,
     }
+    _ALLOWED_TILES: ClassVar[Set[str]] = {'🟩', '🌳', '🟫', '🪨'} | set(_DIRECTION_MARKERS.keys())
 
     def __init__(self, grid_map: List[str]):
         self._validate_map(grid_map)
@@ -21,6 +22,10 @@ class MarsRover:
         lengths = {len(regex.findall(r"\X", row)) for row in grid_map}
         if len(lengths) != 1:
             raise InvalidMap("invalid size")
+        for row in grid_map:
+            for g in regex.findall(r"\X", row):
+                if g not in MarsRover._ALLOWED_TILES:
+                    raise InvalidMap(f"unrecognized land char: {g}")
 
     @staticmethod
     def _extract_position_from_map(grid_map: List[str]) -> Position:

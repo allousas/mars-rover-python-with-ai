@@ -37,6 +37,12 @@ def test_should_initialise_with_an_initial_position_and_a_map(grid_map, expected
         '🟩🟩🟩🌳🟩',
         '🟩🌳🟩🟩🟩'
     ], "initial position marker not found"),
+    ([
+        '🟩🟩🌳🟩🟩',
+        '🟩🧱🟩🟩🟩',  # Unrecognized land character 🧱
+        '🟩🟩🟩🌳🟩',
+        '➡️🟩🟩🟩🟩'
+    ], "unrecognized land char")
 ])
 def test_should_fail_when_map_is_invalid(grid_map, expected_message_fragment):
     with pytest.raises(InvalidMap) as exc:
