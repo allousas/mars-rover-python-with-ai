@@ -26,27 +26,19 @@ def test_should_initialise_with_an_initial_position_and_a_map(grid_map, expected
     assert rover.grid_map == grid_map
 
 
-def test_should_fail_with_invalid_map_size():
-    bad_grid_map = [
+@pytest.mark.parametrize("grid_map, expected_message_fragment", [
+    ([
         '🟩🟩🌳',
         '🟩🟩🟩🟩',
-    ]
-    try:
-        MarsRover(grid_map=bad_grid_map)
-        assert False, "Expected InvalidMap due to invalid map size, but none was raised."
-    except InvalidMap as e:
-        assert "invalid size" in str(e)
-
-
-def test_should_fail_when_initial_position_marker_is_missing():
-    grid_map_without_marker = [
+    ], "invalid size"),
+    ([
         '🟩🟩🌳🟩🟩',
         '🟩🟩🟩🟩🟩',
         '🟩🟩🟩🌳🟩',
         '🟩🌳🟩🟩🟩'
-    ]
-    try:
-        MarsRover(grid_map=grid_map_without_marker)
-        assert False, "Expected InvalidMap due to missing initial position marker, but none was raised."
-    except InvalidMap as e:
-        assert "invalid map: initial position marker not found" in str(e)
+    ], "initial position marker not found"),
+])
+def test_should_fail_when_map_is_invalid(grid_map, expected_message_fragment):
+    with pytest.raises(InvalidMap) as exc:
+        MarsRover(grid_map=grid_map)
+    assert expected_message_fragment in str(exc.value)
