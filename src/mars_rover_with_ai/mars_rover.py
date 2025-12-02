@@ -18,22 +18,30 @@ class MarsRover:
         self._position: Position = self._extract_position_from_map(grid_map)
 
     @staticmethod
+    def _graphemes(row: str) -> List[str]:
+        return regex.findall(r"\X", row)
+
+    @staticmethod
     def _validate_map(grid_map: List[str]):
-        lengths = {len(regex.findall(r"\X", row)) for row in grid_map}
+        grapheme_rows = [MarsRover._graphemes(row) for row in grid_map]
+        lengths = {len(r) for r in grapheme_rows}
         if len(lengths) != 1:
             raise InvalidMap("invalid size")
-        for row in grid_map:
-            for g in regex.findall(r"\X", row):
-                if g not in MarsRover._ALLOWED_TILES:
-                    raise InvalidMap(f"unrecognized land char: {g}")
+        for r in grapheme_rows:
+            unknown = set(r) - MarsRover._ALLOWED_TILES
+            if unknown:
+                bad = next(iter(unknown))
+                raise InvalidMap(f"unrecognized land char: {bad}")
 
     @staticmethod
     def _extract_position_from_map(grid_map: List[str]) -> Position:
         for y, row in enumerate(grid_map):
-            graphemes = regex.findall(r"\X", row)
-            for x, g in enumerate(graphemes):
-                if g in MarsRover._DIRECTION_MARKERS:
-                    return Position(x, y, MarsRover._DIRECTION_MARKERS[g])
+            graphemes = MarsRover._graphemes(row)
+            try:
+                x, g = next((idx, g) for idx, g in enumerate(graphemes) if g in MarsRover._DIRECTION_MARKERS)
+                return Position(x, y, MarsRover._DIRECTION_MARKERS[g])
+            except StopIteration:
+                continue
         raise InvalidMap("invalid map: initial position marker not found")
 
     @property
