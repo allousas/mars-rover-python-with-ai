@@ -1,19 +1,36 @@
 from typing import List
-from mars_rover_with_ai.position import Position
+from mars_rover_with_ai.position import Position, Direction
 import regex
 
 
 class MarsRover:
-    def __init__(self, position: Position, grid_map: List[str]):
+    def __init__(self, grid_map: List[str]):
         self._validate_map(grid_map)
-        self._position: Position = position
         self._grid_map: List[str] = grid_map
+        self._position: Position = self._extract_position_from_map(grid_map)
 
     @staticmethod
     def _validate_map(grid_map: List[str]):
         lengths = {len(regex.findall(r"\X", row)) for row in grid_map}
         if len(lengths) != 1:
             raise InvalidMap("invalid size")
+
+    @staticmethod
+    def _extract_position_from_map(grid_map: List[str]) -> Position:
+        # Map direction emojis to Direction enum
+        direction_map = {
+            '➡️': Direction.E,
+            '⬅️': Direction.W,
+            '⬆️': Direction.N,
+            '⬇️': Direction.S,
+        }
+        for y, row in enumerate(grid_map):
+            graphemes = regex.findall(r"\X", row)
+            for x, g in enumerate(graphemes):
+                if g in direction_map:
+                    return Position(x, y, direction_map[g])
+        # If no marker found, default or raise? Raise for now.
+        raise InvalidMap("invalid map: initial position marker not found")
 
     @property
     def position(self):
