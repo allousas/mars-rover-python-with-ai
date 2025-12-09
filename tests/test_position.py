@@ -5,9 +5,9 @@ N, E, S, W = Direction.N, Direction.E, Direction.S, Direction.W
 
 
 @pytest.mark.parametrize("start, expected", [
-    (Position(0, 0, N), Position(0, 1, N)),
+    (Position(0, 0, N), Position(0, -1, N)),
     (Position(0, 0, E), Position(1, 0, E)),
-    (Position(0, 0, S), Position(0, -1, S)),
+    (Position(0, 0, S), Position(0, 1, S)),
     (Position(0, 0, W), Position(-1, 0, W)),
 ])
 def test_should_move_forward(start, expected):

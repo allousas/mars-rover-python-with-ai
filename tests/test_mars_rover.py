@@ -28,6 +28,19 @@ def test_should_execute_list_of_commands():
     ]
     rover = MarsRover(grid_map=grid_map)
 
-    rover.execute('➡️⬆️⬅️')
+    rover.execute('➡️⬆️⬅️') # turn right, move forward, turn left
 
-    assert rover.position == Position(0, 3, E)
+    assert rover.position == Position(1, 3, N)
+
+
+def test_should_not_move_when_encountering_obstacle():
+    grid_map = [
+        '🟩🟩🟩',
+        '🟩🌳🟩',
+        '⬆️🟩🟩'
+    ]
+    rover = MarsRover(grid_map=grid_map)
+
+    rover.execute('⬆️➡️⬆️') # move forward, turn right, move forward into obstacle
+
+    assert rover.position == Position(0, 1, E)

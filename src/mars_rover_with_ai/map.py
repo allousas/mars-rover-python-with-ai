@@ -41,11 +41,11 @@ class Map:
             raise InvalidMap("invalid map: initial position marker not found")
 
     def find_initial_position(self) -> Position:
-        for y, row in enumerate(self._grid_map):
+        for row_index, row in enumerate(self._grid_map):
             graphemes = self._graphemes(row)
             for x, g in enumerate(graphemes):
                 if g in Map._DIRECTION_MARKERS:
-                    return Position(x, y, Map._DIRECTION_MARKERS[g])
+                    return Position(x, row_index, Map._DIRECTION_MARKERS[g])
         raise InvalidMap("invalid map: initial position marker not found")
 
 

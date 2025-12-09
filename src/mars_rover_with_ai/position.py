@@ -20,9 +20,9 @@ class Position:
     direction: Direction
 
     _FORWARD_MOVEMENTS: ClassVar[Dict[Direction, Tuple[int, int]]] = {
-        Direction.N: (0, 1),
+        Direction.N: (0, -1),
         Direction.E: (1, 0),
-        Direction.S: (0, -1),
+        Direction.S: (0, 1),
         Direction.W: (-1, 0)
     }
 
@@ -48,3 +48,4 @@ class Position:
 
     def turn_left(self):
         return Position(self.x, self.y, self._LEFT_TURNS[self.direction])
+
