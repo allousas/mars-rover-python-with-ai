@@ -16,7 +16,6 @@ def test_should_initialise_with_an_initial_position_and_a_map():
     rover = MarsRover(grid_map=grid_map)
 
     assert rover.position == expected_position
-    assert rover.grid_map == grid_map
 
 
 def test_should_execute_list_of_commands():

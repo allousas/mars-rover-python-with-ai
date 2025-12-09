@@ -25,6 +25,3 @@ class MarsRover:
     def position(self):
         return self._position
 
-    @property
-    def grid_map(self):
-        return self._map.grid_map
