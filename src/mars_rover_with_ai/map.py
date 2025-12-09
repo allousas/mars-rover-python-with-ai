@@ -10,7 +10,7 @@ class Map:
         '⬆️': Direction.N,
         '⬇️': Direction.S,
     }
-    _ALLOWED_TILES: ClassVar[Set[str]] = {'🟩', '🌳', '🟫', '🪨'} | set(DIRECTION_MARKERS.keys())
+    _ALLOWED_TILES: ClassVar[Set[str]] = {'🟩', '🌳', '🟫', '🪨'} | set(_DIRECTION_MARKERS.keys())
     _GRAPHEME_RE: ClassVar = regex.compile(r"\X")
 
     def __init__(self, grid_map: List[str]):
