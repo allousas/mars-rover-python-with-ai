@@ -11,6 +11,7 @@ class Map:
         '⬇️': Direction.S,
     }
     _ALLOWED_TILES: ClassVar[Set[str]] = {'🟩', '🌳', '🟫', '🪨'} | set(_DIRECTION_MARKERS.keys())
+    _OBSTACLES: ClassVar[Set[str]] = {'🌳', '🪨'}
     _GRAPHEME_RE: ClassVar = regex.compile(r"\X")
 
     def __init__(self, grid_map: List[str]):
@@ -47,6 +48,16 @@ class Map:
                 if g in Map._DIRECTION_MARKERS:
                     return Position(x, row_index, Map._DIRECTION_MARKERS[g])
         raise InvalidMap("invalid map: initial position marker not found")
+
+    def is_obstacle_at(self, position: Position) -> bool:
+        if position.y < 0 or position.y >= len(self._grid_map):
+            return True
+        row = self._grid_map[position.y]
+        graphemes = self._graphemes(row)
+        if position.x < 0 or position.x >= len(graphemes):
+            return True
+        tile = graphemes[position.x]
+        return tile in Map._OBSTACLES
 
 
 class InvalidMap(Exception):
